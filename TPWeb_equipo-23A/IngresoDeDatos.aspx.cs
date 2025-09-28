@@ -7,11 +7,11 @@ using System.Web.UI.WebControls;
 
 namespace TPWeb_equipo_23A
 {
-	public partial class SiteMaster : MasterPage
-	{
-		protected void Page_Load(object sender, EventArgs e)
-		{
-			Page.Title = "PROMO WEB";
-		}
-	}
+    public partial class IngresoDeDatos : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+
+        }
+    }
 }

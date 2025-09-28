@@ -143,3 +143,6 @@ insert into vouchers values
 ('Codigo04', null, null, null),
 ('Codigo05', null, null, null)
 
+select * from Clientes
+
+insert into Clientes values ('1234567', 'Pepe', 'Argento', 'pepe@argento.com', 'lalala 456', 'CABA', '1234')

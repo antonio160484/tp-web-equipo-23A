@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace dominio
 {
-    internal class Voucher
+    public class Voucher
     {
+        public string IdVoucher { get; set; }
+        public DateTime FechaCanje { get; set; }
     }
 }

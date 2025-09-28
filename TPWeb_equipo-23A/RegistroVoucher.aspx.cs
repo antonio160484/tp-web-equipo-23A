@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using dominio;
 
 namespace TPWeb_equipo_23A
 {
@@ -11,7 +12,12 @@ namespace TPWeb_equipo_23A
 	{
 		protected void Page_Load(object sender, EventArgs e)
 		{
-
+			Page.Title = "Promo Gana";
 		}
-	}
+
+        protected void btnAceptar_Click(object sender, EventArgs e)
+        {
+			
+        }
+    }
 }
