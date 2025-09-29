@@ -16,7 +16,7 @@ namespace negocio
 
 			try
 			{
-				datos.setearConsulta("SELECT I.Id, I.IdArticulo, I.ImagenUrl FROM IMAGENES I WHERE I.IdArticulo = @idArticulo");
+				datos.setearProcedimiento("SP_ListarImagenesPorArticulo");
 				datos.setearParametro("@idArticulo", idArticulo);
 				datos.ejecutarLectura();
 
@@ -35,7 +35,7 @@ namespace negocio
 			}
 			catch (Exception ex)
 			{
-				throw ex;
+				throw new Exception("Error al listar imágenes para el artículo: " + idArticulo, ex);
 			}
 			finally
 			{

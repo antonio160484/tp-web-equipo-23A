@@ -16,7 +16,7 @@ namespace negocio
 
 			try
 			{
-				datos.setearConsulta("select distinct A.Id, A.nombre, A.Descripcion  from ARTICULOS A");
+				datos.setearProcedimiento("SP_ListarArticulos");
 				datos.ejecutarLectura();
 
 				while (datos.Lector.Read())
@@ -34,9 +34,9 @@ namespace negocio
 
 				return lista;
 			}
-			catch (Exception )
+			catch (Exception ex)
 			{
-				throw ;
+				throw new Exception("Error al listar artículos desde la capa de negocio.", ex);
 			}
 			finally
 			{

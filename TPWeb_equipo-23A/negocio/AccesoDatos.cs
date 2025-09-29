@@ -38,7 +38,7 @@ namespace negocio
                 conexion.Open();
                 lector = comando.ExecuteReader();
             }
-            catch(Exception)
+            catch (Exception)
             {
                 throw;
             }
@@ -52,16 +52,16 @@ namespace negocio
                 conexion.Open();
                 comando.ExecuteNonQuery();
             }
-            catch (Exception )
+            catch (Exception)
             {
 
-                throw ;
+                throw;
             }
         }
 
         public void setearParametro(string nombre, object valor)
         {
-            comando.Parameters.AddWithValue(nombre,valor);
+            comando.Parameters.AddWithValue(nombre, valor);
         }
 
         public object ejecutarScalar()
@@ -74,7 +74,7 @@ namespace negocio
             }
             catch (Exception)
             {
-                throw ;
+                throw;
             }
         }
 
@@ -85,6 +85,13 @@ namespace negocio
                 lector.Close();
             }
             conexion.Close();
+        }
+
+        public void setearProcedimiento(string spNombre)
+        {
+            // Cambia el tipo de comando de CommandType.Text a CommandType.StoredProcedure
+            comando.CommandType = System.Data.CommandType.StoredProcedure;
+            comando.CommandText = spNombre;
         }
     }
 }
