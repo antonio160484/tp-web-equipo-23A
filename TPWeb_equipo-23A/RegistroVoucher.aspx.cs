@@ -12,12 +12,12 @@ namespace TPWeb_equipo_23A
 	{
 		protected void Page_Load(object sender, EventArgs e)
 		{
-			Page.Title = "Promo Gana";
+			Title = "Promo Gana";
 		}
 
         protected void btnAceptar_Click(object sender, EventArgs e)
         {
-			
+			Response.Redirect("EleccionPremio.aspx",false);
         }
     }
 }
