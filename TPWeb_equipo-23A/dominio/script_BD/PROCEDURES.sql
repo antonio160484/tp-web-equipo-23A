@@ -64,3 +64,67 @@ BEGIN
     WHERE I.IdArticulo = @idArticulo
 END
 GO
+
+CREATE PROCEDURE SP_RegistrarCliente
+    @Documento VARCHAR(50),
+    @Nombre VARCHAR(50),
+    @Apellido VARCHAR(50),
+    @Email VARCHAR(50),
+    @Direccion VARCHAR(50),
+    @Ciudad VARCHAR(50),
+    @CP INT -- Ajusta el tipo de dato si en tu tabla CP es VARCHAR
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- 1. Insertar el nuevo cliente con los datos proporcionados
+    INSERT INTO Clientes (Documento, Nombre, Apellido, Email, Direccion, Ciudad, CP)
+    VALUES (@Documento, @Nombre, @Apellido, @Email, @Direccion, @Ciudad, @CP);
+
+    -- 2. Devolver el ID autogenerado del registro que acabamos de insertar
+    SELECT SCOPE_IDENTITY() AS NuevoId; 
+END
+GO
+
+CREATE PROCEDURE SP_BuscarCliente
+    @Documento VARCHAR(50)
+AS
+BEGIN
+    SELECT 
+        Id, Documento, Nombre, Apellido, Email, Direccion, Ciudad, CP
+    FROM Clientes
+    WHERE Documento = @Documento;
+END
+GO
+
+IF OBJECT_ID('SP_ModificarCliente', 'P') IS NOT NULL
+    DROP PROCEDURE SP_ModificarCliente;
+GO
+
+CREATE PROCEDURE SP_ModificarCliente
+    @Id INT,
+    @Documento VARCHAR(50),
+    @Nombre VARCHAR(50),
+    @Apellido VARCHAR(50),
+    @Email VARCHAR(50),
+    @Direccion VARCHAR(50),
+    @Ciudad VARCHAR(50),
+    @CP INT -- Ajusta el tipo de dato si es necesario
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    UPDATE Clientes
+    SET 
+        Documento = @Documento, 
+        Nombre = @Nombre, 
+        Apellido = @Apellido, 
+        Email = @Email, 
+        Direccion = @Direccion, 
+        Ciudad = @Ciudad, 
+        CP = @CP
+    WHERE 
+        Id = @Id;
+
+END
+GO
