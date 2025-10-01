@@ -96,6 +96,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Error.aspx" />
     <Content Include="IngresoDeDatos.aspx" />
     <Content Include="RegistroVoucher.aspx" />
     <Content Include="Contacto.aspx" />
@@ -162,6 +163,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="Error.aspx.cs">
+      <DependentUpon>Error.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Error.aspx.designer.cs">
+      <DependentUpon>Error.aspx</DependentUpon>
+    </Compile>
     <Compile Include="IngresoDeDatos.aspx.cs">
       <DependentUpon>IngresoDeDatos.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
