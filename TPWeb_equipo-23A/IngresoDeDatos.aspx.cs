@@ -12,6 +12,14 @@ namespace TPWeb_equipo_23A
 {
     public partial class IngresoDeDatos : System.Web.UI.Page
     {
+        protected TextBox txtNombre;
+        protected TextBox txtApellido;
+        protected TextBox txtMail;
+        protected TextBox txtDireccion;
+        protected TextBox txtCiudad;
+        protected TextBox txtCp;
+        protected CheckBox chkTerminosYCond;
+
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -23,7 +31,7 @@ namespace TPWeb_equipo_23A
 
 			if (string.IsNullOrWhiteSpace(txtDni.Text) || !int.TryParse(txtDni.Text.Trim(), out _))
 			{
-				Nombre.Text = Apellido.Text = Mail.Text = Direccion.Text = Ciudad.Text = Cp.Text = string.Empty;
+				txtNombre.Text = txtApellido.Text = txtMail.Text = txtDireccion.Text = txtCiudad.Text = txtCp.Text = string.Empty;
 				Session["IdClienteExistente"] = null;
 				txtDni.Enabled = true;
 				return;
@@ -36,12 +44,12 @@ namespace TPWeb_equipo_23A
 
 				if (clienteExistente != null)
 				{
-					Nombre.Text = clienteExistente.Nombre;
-					Apellido.Text = clienteExistente.Apellido;
-					Mail.Text = clienteExistente.Email;
-					Direccion.Text = clienteExistente.Direccion;
-					Ciudad.Text = clienteExistente.Ciudad;
-					Cp.Text = clienteExistente.CodigoPostal.ToString();
+					txtNombre.Text = clienteExistente.Nombre;
+					txtApellido.Text = clienteExistente.Apellido;
+					txtMail.Text = clienteExistente.Email;
+					txtDireccion.Text = clienteExistente.Direccion;
+					txtCiudad.Text = clienteExistente.Ciudad;
+					txtCp.Text = clienteExistente.CodigoPostal.ToString();
 
 					txtDni.Enabled = false;
 					Session["IdClienteExistente"] = clienteExistente.IdCliente;
@@ -51,7 +59,7 @@ namespace TPWeb_equipo_23A
 				}
 				else
 				{
-					Nombre.Text = Apellido.Text = Mail.Text = Direccion.Text = Ciudad.Text = Cp.Text = string.Empty;
+					txtNombre.Text = txtApellido.Text = txtMail.Text = txtDireccion.Text = txtCiudad.Text = txtCp.Text = string.Empty;
 
 					txtDni.Enabled = true;
 					Session["IdClienteExistente"] = null;
@@ -82,7 +90,7 @@ namespace TPWeb_equipo_23A
 				lblError.ForeColor = Color.Red;
 				return;
 			}
-			if (!terminosYCond.Checked)
+			if (!chkTerminosYCond.Checked)
 			{
 				lblTerminosError.Visible = true;
 				return;
@@ -95,18 +103,18 @@ namespace TPWeb_equipo_23A
 			try
 			{
 				int cpValue;
-				if (!int.TryParse(Cp.Text.Trim(), out cpValue) || !int.TryParse(txtDni.Text.Trim(), out _))
+				if (!int.TryParse(txtCp.Text.Trim(), out cpValue) || !int.TryParse(txtDni.Text.Trim(), out _))
 				{
 					lblError.Text = "Error de formato: El DNI y el CP deben contener solo números válidos.";
 					lblError.ForeColor = Color.Red;
 					return;
 				}
 				clienteDatos.Documento = txtDni.Text.Trim();
-				clienteDatos.Nombre = Nombre.Text.Trim();
-				clienteDatos.Apellido = Apellido.Text.Trim();
-				clienteDatos.Email = Mail.Text.Trim();
-				clienteDatos.Direccion = Direccion.Text.Trim();
-				clienteDatos.Ciudad = Ciudad.Text.Trim();
+				clienteDatos.Nombre = txtNombre.Text.Trim();
+				clienteDatos.Apellido = txtApellido.Text.Trim();
+				clienteDatos.Email = txtMail.Text.Trim();
+				clienteDatos.Direccion = txtDireccion.Text.Trim();
+				clienteDatos.Ciudad = txtCiudad.Text.Trim();
 				clienteDatos.CodigoPostal = cpValue;
 				string codigoVoucher = (string)Session["CodigoVoucherCanjeo"];
 				if (Session["IdClienteExistente"] != null)
@@ -144,12 +152,12 @@ namespace TPWeb_equipo_23A
 		private bool ValidarCamposRequeridos()
 		{
 			if (string.IsNullOrWhiteSpace(txtDni.Text) ||
-				string.IsNullOrWhiteSpace(Nombre.Text) ||
-				string.IsNullOrWhiteSpace(Apellido.Text) ||
-				string.IsNullOrWhiteSpace(Mail.Text) ||
-				string.IsNullOrWhiteSpace(Direccion.Text) ||
-				string.IsNullOrWhiteSpace(Ciudad.Text) ||
-				string.IsNullOrWhiteSpace(Cp.Text))
+				string.IsNullOrWhiteSpace(txtNombre.Text) ||
+				string.IsNullOrWhiteSpace(txtApellido.Text) ||
+				string.IsNullOrWhiteSpace(txtMail.Text) ||
+				string.IsNullOrWhiteSpace(txtDireccion.Text) ||
+				string.IsNullOrWhiteSpace(txtCiudad.Text) ||
+				string.IsNullOrWhiteSpace(txtCp.Text))
 			{
 				return false;
 			}

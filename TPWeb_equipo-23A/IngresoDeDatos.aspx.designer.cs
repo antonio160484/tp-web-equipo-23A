@@ -24,13 +24,13 @@ namespace TPWeb_equipo_23A
 		protected global::System.Web.UI.WebControls.Label lblError;
 
 		/// <summary>
-		/// Control ValidationSummary1.
+		/// Control vsRegistro.
 		/// </summary>
 		/// <remarks>
 		/// Campo generado automáticamente.
 		/// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
 		/// </remarks>
-		protected global::System.Web.UI.WebControls.ValidationSummary ValidationSummary1;
+		protected global::System.Web.UI.WebControls.ValidationSummary vsRegistro;
 
 		/// <summary>
 		/// Control txtDni.
@@ -42,76 +42,22 @@ namespace TPWeb_equipo_23A
 		protected global::System.Web.UI.WebControls.TextBox txtDni;
 
 		/// <summary>
-		/// Control Nombre.
+		/// Control valDni.
 		/// </summary>
 		/// <remarks>
 		/// Campo generado automáticamente.
 		/// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
 		/// </remarks>
-		protected global::System.Web.UI.WebControls.TextBox Nombre;
+		protected global::System.Web.UI.WebControls.RegularExpressionValidator valDni;
 
 		/// <summary>
-		/// Control Apellido.
+		/// Control valMail.
 		/// </summary>
 		/// <remarks>
 		/// Campo generado automáticamente.
 		/// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
 		/// </remarks>
-		protected global::System.Web.UI.WebControls.TextBox Apellido;
-
-		/// <summary>
-		/// Control Mail.
-		/// </summary>
-		/// <remarks>
-		/// Campo generado automáticamente.
-		/// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-		/// </remarks>
-		protected global::System.Web.UI.WebControls.TextBox Mail;
-
-		/// <summary>
-		/// Control regexEmailValidator.
-		/// </summary>
-		/// <remarks>
-		/// Campo generado automáticamente.
-		/// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-		/// </remarks>
-		protected global::System.Web.UI.WebControls.RegularExpressionValidator regexEmailValidator;
-
-		/// <summary>
-		/// Control Direccion.
-		/// </summary>
-		/// <remarks>
-		/// Campo generado automáticamente.
-		/// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-		/// </remarks>
-		protected global::System.Web.UI.WebControls.TextBox Direccion;
-
-		/// <summary>
-		/// Control Ciudad.
-		/// </summary>
-		/// <remarks>
-		/// Campo generado automáticamente.
-		/// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-		/// </remarks>
-		protected global::System.Web.UI.WebControls.TextBox Ciudad;
-
-		/// <summary>
-		/// Control Cp.
-		/// </summary>
-		/// <remarks>
-		/// Campo generado automáticamente.
-		/// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-		/// </remarks>
-		protected global::System.Web.UI.WebControls.TextBox Cp;
-
-		/// <summary>
-		/// Control terminosYCond.
-		/// </summary>
-		/// <remarks>
-		/// Campo generado automáticamente.
-		/// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-		/// </remarks>
-		protected global::System.Web.UI.WebControls.CheckBox terminosYCond;
+		protected global::System.Web.UI.WebControls.RegularExpressionValidator valMail;
 
 		/// <summary>
 		/// Control lblTerminosError.

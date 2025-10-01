@@ -11,14 +11,18 @@ namespace TPWeb_equipo_23A
 {
 	public partial class About : Page
 	{
+        protected TextBox txtCodigoVoucher;
+        protected Button btnRegistrarVoucher;
+        protected Label lblVoucherMensaje;
+
 		protected void Page_Load(object sender, EventArgs e)
 		{
 			Title = "Promo Gana";
 		}
 
-        protected void btnAceptar_Click(object sender, EventArgs e)
+        protected void btnRegistrarVoucher_Click(object sender, EventArgs e)
         {
-            string codigoVoucher = txtId.Text.Trim();
+            string codigoVoucher = txtCodigoVoucher.Text.Trim();
             AccesoDatos datos = new AccesoDatos();
 
             try
@@ -29,7 +33,7 @@ namespace TPWeb_equipo_23A
 
                 if (!datos.Lector.HasRows)
                 {
-                    lblMensaje.Text = "El voucher no es válido.";
+                    lblVoucherMensaje.Text = "El voucher no es válido.";
                     return;
                 }
 
@@ -38,7 +42,7 @@ namespace TPWeb_equipo_23A
 
                 if (yaUsado)
                 {
-                    lblMensaje.Text = "El voucher ya fue usado.";
+                    lblVoucherMensaje.Text = "El voucher ya fue usado.";
                     return;
                 }
 
@@ -47,7 +51,7 @@ namespace TPWeb_equipo_23A
             }
             catch (Exception ex)
             {
-                lblMensaje.Text = "Error: " + ex.Message;
+                lblVoucherMensaje.Text = "Error: " + ex.Message;
             }
             finally
             {

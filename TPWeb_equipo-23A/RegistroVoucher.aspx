@@ -7,12 +7,12 @@
         <div class="row">
             <div class="col-6">
                 <div class="mb-3">
-                    <label for="txtId" class="form-label">Codigo del voucher:</label>
-                    <asp:TextBox runat="server" ID="txtId" CssClass="form-control" />
+                    <label for="txtCodigoVoucher" class="form-label">Codigo del voucher:</label>
+                    <asp:TextBox runat="server" ID="txtCodigoVoucher" CssClass="form-control" />
                 </div>
                 <div class="mb-3">
-                    <asp:Button Text="Aceptar" ID="btnAceptar" CssClass="btn btn-primary btn-sm" OnClick="btnAceptar_Click" runat="server" />
-                    <asp:Label runat="server" ID="lblMensaje" ForeColor="Red" />
+                    <asp:Button Text="Aceptar" ID="btnRegistrarVoucher" CssClass="btn btn-primary btn-sm" OnClick="btnRegistrarVoucher_Click" runat="server" />
+                    <asp:Label runat="server" ID="lblVoucherMensaje" ForeColor="Red" />
                 </div>
             </div>
         </div>
