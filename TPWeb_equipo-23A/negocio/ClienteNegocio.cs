@@ -7,16 +7,104 @@ using dominio;
 
 namespace negocio
 {
-    public class ClienteNegocio
-    {
-        public void agregar(Cliente nuevo) 
-        {
-            
-        }
-    
+	public class ClienteNegocio
+	{
 
-        public void modificar(Cliente nuevo)
-        {
-        }
-    }
+		public int Registrar(Cliente nuevo)
+		{
+			AccesoDatos datos = new AccesoDatos();
+			int idGenerado = -1;
+
+			try
+			{
+				datos.setearProcedimiento("SP_RegistrarCliente");
+				datos.setearParametro("@Documento", nuevo.Documento);
+				datos.setearParametro("@Nombre", nuevo.Nombre);
+				datos.setearParametro("@Apellido", nuevo.Apellido);
+				datos.setearParametro("@Email", nuevo.Email);
+				datos.setearParametro("@Direccion", nuevo.Direccion);
+				datos.setearParametro("@Ciudad", nuevo.Ciudad);
+				datos.setearParametro("@CP", nuevo.CodigoPostal);
+
+				datos.ejecutarLectura();
+
+				if (datos.Lector.Read())
+				{
+					idGenerado = (int)datos.Lector["NuevoId"];
+				}
+
+				return idGenerado;
+			}
+			catch (Exception ex)
+			{
+				throw new Exception("Error al intentar registrar el nuevo cliente en la BD.", ex);
+			}
+			finally
+			{
+				datos.cerrarConexion();
+			}
+		}
+
+		public Cliente Buscar(string documento)
+		{
+			AccesoDatos datos = new AccesoDatos();
+			try
+			{
+				datos.setearConsulta("SELECT Id, Documento, Nombre, Apellido, Email, Direccion, Ciudad, CP FROM Clientes WHERE TRIM(Documento) = @Documento");
+				datos.setearParametro("@Documento", documento);
+				datos.ejecutarLectura();
+
+				if (datos.Lector.Read())
+				{
+					Cliente cliente = new Cliente();
+					cliente.IdCliente = (int)datos.Lector["Id"];
+					cliente.Documento = (string)datos.Lector["Documento"];
+					cliente.Nombre = (string)datos.Lector["Nombre"];
+					cliente.Apellido = (string)datos.Lector["Apellido"];
+					cliente.Email = (string)datos.Lector["Email"];
+					cliente.Direccion = (string)datos.Lector["Direccion"];
+					cliente.Ciudad = (string)datos.Lector["Ciudad"];
+					cliente.CodigoPostal = (int)datos.Lector["CP"];
+					return cliente;
+				}
+				return null;
+			}
+			catch (Exception ex)
+			{
+				throw new Exception("Error al buscar cliente por DNI en la base de datos.", ex);
+			}
+			finally
+			{
+				datos.cerrarConexion();
+			}
+		}
+
+		public void Modificar(Cliente cliente)
+		{
+			AccesoDatos datos = new AccesoDatos();
+
+			try
+			{
+				datos.setearProcedimiento("SP_ModificarCliente");
+				datos.setearParametro("@Id", cliente.IdCliente);
+				datos.setearParametro("@Documento", cliente.Documento);
+				datos.setearParametro("@Nombre", cliente.Nombre);
+				datos.setearParametro("@Apellido", cliente.Apellido);
+				datos.setearParametro("@Email", cliente.Email);
+				datos.setearParametro("@Direccion", cliente.Direccion);
+				datos.setearParametro("@Ciudad", cliente.Ciudad);
+				datos.setearParametro("@CP", cliente.CodigoPostal);
+
+				datos.ejecutarAccion();
+			}
+			catch (Exception ex)
+			{
+				throw new Exception("Error al intentar modificar los datos del cliente en la BD.", ex);
+			}
+			finally
+			{
+				datos.cerrarConexion();
+			}
+		}
+	}
 }

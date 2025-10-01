@@ -15,7 +15,7 @@ namespace TPWeb_equipo_23A
         protected void Page_Load(object sender, EventArgs e)
         {
             ArticuloNegocio nuevo = new ArticuloNegocio();
-            ListaArticulo = nuevo.listar();
+            ListaArticulo = nuevo.listar();   
 
         }
     }
