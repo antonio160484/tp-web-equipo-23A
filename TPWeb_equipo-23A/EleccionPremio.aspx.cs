@@ -17,8 +17,6 @@ namespace TPWeb_equipo_23A
             ArticuloNegocio nuevo = new ArticuloNegocio();
             ListaArticulo = nuevo.listar();
 
-           
-
         }
     }
 }
