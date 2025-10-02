@@ -19,12 +19,12 @@
                                 bool primera = true;
                                 foreach (var img in art.listaImagenes)
                                 { %>
-                            <div class="carousel-item <%: primera ? "active" : "" %>">
-                                <img src="<%: img.ImagenUrl %>" class="d-block w-100" alt="<%: art.Nombre %>"style=height:350px; width:150%; object-fit:cover;">
-                            </div>
-                            <% 
-                                    primera = false;
-                                } %>
+                                 <div class="carousel-item <%: primera ? "active" : "" %>">
+                                       <img src="<%: img.ImagenUrl %>" class="d-block w-100" alt="<%: art.Nombre %>"style=height:350px; width:150%; object-fit:cover;">
+                                 </div>
+                              <% 
+                                      primera = false;
+                                  } %>
                         </div>
                         <!-- Controles del carrusel -->
                         <button class="carousel-control-prev" type="button" data-bs-target="#carousel<%: art.Id %>" data-bs-slide="prev">
@@ -41,7 +41,7 @@
                     <div class="card-body">
                         <h5 class="card-title"><%: art.Nombre %></h5>
                         <p class="card-text"><%: art.Descripcion %></p>
-                        <asp:Button ID="btnEleccion" runat="server" CssClass="btn btn-primary btn-sm" Text="Quiero este" />
+                        <asp:Button Text="Quiero este"  ID="btnEleccion" CssClass="btn btn-primary btn-sm" OnClick="btnEleccion_Click" runat="server" />
                     </div>
                 </div>
             </div>

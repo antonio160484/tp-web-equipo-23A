@@ -18,5 +18,11 @@ namespace TPWeb_equipo_23A
             ListaArticulo = nuevo.listar();   
 
         }
+
+        protected void btnEleccion_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("IngresoDeDatos");
+        }
+
     }
 }
