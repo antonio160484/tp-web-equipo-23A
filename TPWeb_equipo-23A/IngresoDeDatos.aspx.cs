@@ -51,6 +51,7 @@ namespace TPWeb_equipo_23A
 					txtCiudad.Text = clienteExistente.Ciudad;
 					txtCp.Text = clienteExistente.CodigoPostal.ToString();
 
+					// Mantener el DNI deshabilitado para evitar cambios
 					txtDni.Enabled = false;
 					Session["IdClienteExistente"] = clienteExistente.IdCliente;
 
@@ -61,6 +62,7 @@ namespace TPWeb_equipo_23A
 				{
 					txtNombre.Text = txtApellido.Text = txtMail.Text = txtDireccion.Text = txtCiudad.Text = txtCp.Text = string.Empty;
 
+					// Mantener el DNI habilitado solo si no existe el cliente
 					txtDni.Enabled = true;
 					Session["IdClienteExistente"] = null;
 
@@ -117,30 +119,31 @@ namespace TPWeb_equipo_23A
 				clienteDatos.Ciudad = txtCiudad.Text.Trim();
 				clienteDatos.CodigoPostal = cpValue;
 				string codigoVoucher = (string)Session["CodigoVoucherCanjeo"];
-				if (Session["IdClienteExistente"] != null)
+
+				// Comprobación directa en la base de datos por DNI
+				Cliente clienteExistente = clienteNegocio.Buscar(clienteDatos.Documento);
+				if (clienteExistente != null)
 				{
-					idClienteCanje = (int)Session["IdClienteExistente"];
-					clienteDatos.IdCliente = idClienteCanje;
+					// Modificar el cliente existente
+					clienteDatos.IdCliente = clienteExistente.IdCliente;
+					idClienteCanje = clienteExistente.IdCliente;
 					clienteNegocio.Modificar(clienteDatos);
 				}
 				else
 				{
+					// Registrar nuevo cliente
 					idClienteCanje = clienteNegocio.Registrar(clienteDatos);
 
 					if (idClienteCanje <= 0)
 						throw new Exception("El registro de cliente falló. Contacte al administrador.");
 				}
 
-				// Lógica de Canje la dejo comentada porque no esta implementada todavia
-				// VoucherNegocio voucherNegocio = new VoucherNegocio();
-				// int idArticulo = (int)Session["IdArticuloSeleccionado"];
-				// voucherNegocio.Canjear(codigoVoucher, idClienteCanje, idArticulo);
-
+				// Limpiar la sesión solo después de la operación
 				Session["CodigoVoucherCanjeo"] = null;
 				Session["IdArticuloSeleccionado"] = null;
 				Session["IdClienteExistente"] = null;
 
-				Response.Redirect("Confirmacion.aspx", false);
+				//Response.Redirect("Confirmacion.aspx", false);
 			}
 			catch (Exception ex)
 			{

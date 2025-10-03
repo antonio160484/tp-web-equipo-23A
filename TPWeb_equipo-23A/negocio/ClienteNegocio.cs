@@ -50,7 +50,8 @@ namespace negocio
 			AccesoDatos datos = new AccesoDatos();
 			try
 			{
-				datos.setearConsulta("SELECT Id, Documento, Nombre, Apellido, Email, Direccion, Ciudad, CP FROM Clientes WHERE TRIM(Documento) = @Documento");
+				datos.setearProcedimiento("SP_BuscarCliente");
+
 				datos.setearParametro("@Documento", documento);
 				datos.ejecutarLectura();
 
@@ -71,7 +72,7 @@ namespace negocio
 			}
 			catch (Exception ex)
 			{
-				throw new Exception("Error al buscar cliente por DNI en la base de datos.", ex);
+				throw new Exception("Error al buscar cliente por DNI", ex);
 			}
 			finally
 			{
