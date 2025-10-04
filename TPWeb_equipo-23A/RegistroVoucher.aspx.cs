@@ -28,6 +28,7 @@ namespace TPWeb_equipo_23A
             if (negocio.EsValido(codigo))
             {
                 Session["voucher"] = negocio.BuscarPorCodigo(codigo);
+                Session["CodigoVoucherCanjeo"] = codigo;
                 Response.Redirect("EleccionPremio.aspx");
             }
             else

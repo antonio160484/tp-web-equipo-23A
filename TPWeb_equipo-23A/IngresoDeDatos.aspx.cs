@@ -22,10 +22,22 @@ namespace TPWeb_equipo_23A
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (!IsPostBack)
+            {
+                string idArticuloString = Request.QueryString["idArticulo"];
+                if (!string.IsNullOrEmpty(idArticuloString) && int.TryParse(idArticuloString, out int idArticulo))
+                {
+                    Session["IdArticuloSeleccionado"] = idArticulo;
+                }
+                else
+                {
+                    lblError.Text = "No se pudo determinar el premio seleccionado.";
+                    lblError.ForeColor = System.Drawing.Color.Red;
+                }
+            }
         }
 
-		protected void txtDni_TextChanged(object sender, EventArgs e)
+        protected void txtDni_TextChanged(object sender, EventArgs e)
 		{
 			lblError.Text = string.Empty;
 
@@ -119,9 +131,10 @@ namespace TPWeb_equipo_23A
 				clienteDatos.Ciudad = txtCiudad.Text.Trim();
 				clienteDatos.CodigoPostal = cpValue;
 				string codigoVoucher = (string)Session["CodigoVoucherCanjeo"];
+                int idArticulo = (int)Session["IdArticuloSeleccionado"];
 
-				// Comprobación directa en la base de datos por DNI
-				Cliente clienteExistente = clienteNegocio.Buscar(clienteDatos.Documento);
+                // Comprobación directa en la base de datos por DNI
+                Cliente clienteExistente = clienteNegocio.Buscar(clienteDatos.Documento);
 				if (clienteExistente != null)
 				{
 					// Modificar el cliente existente
@@ -138,12 +151,15 @@ namespace TPWeb_equipo_23A
 						throw new Exception("El registro de cliente falló. Contacte al administrador.");
 				}
 
+				VoucherNegocio vn = new VoucherNegocio();
+				vn.CanjearVoucher(codigoVoucher, idClienteCanje, idArticulo);
+
 				// Limpiar la sesión solo después de la operación
 				Session["CodigoVoucherCanjeo"] = null;
 				Session["IdArticuloSeleccionado"] = null;
 				Session["IdClienteExistente"] = null;
 
-				//Response.Redirect("Confirmacion.aspx", false);
+				//Response.Redirect("Exito.aspx", false);
 			}
 			catch (Exception ex)
 			{

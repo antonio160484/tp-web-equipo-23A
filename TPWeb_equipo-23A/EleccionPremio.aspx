@@ -41,7 +41,7 @@
                                     <div class="card-body">
                                         <h5 class="card-title"><%: art.Nombre %></h5>
                                         <p class="card-text"><%: art.Descripcion %></p>
-                                        <asp:Button Text="Quiero este"  ID="btnEleccion" CssClass="btn btn-primary btn-sm" OnClick="btnEleccion_Click" runat="server" />
+                                        <a href="IngresoDeDatos.aspx?idArticulo=<%: art.Id %>" class="btn btn-primary btn-sm">Quiero este</a>
                                     </div>
                                 </div>
                             </div>
