@@ -159,7 +159,7 @@ namespace TPWeb_equipo_23A
 				Session["IdArticuloSeleccionado"] = null;
 				Session["IdClienteExistente"] = null;
 
-				//Response.Redirect("Exito.aspx", false);
+				Response.Redirect("Exito.aspx", false);
 			}
 			catch (Exception ex)
 			{
