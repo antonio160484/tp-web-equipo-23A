@@ -17,7 +17,7 @@ namespace negocio
 
 			try
 			{
-				datos.setearProcedimiento("SP_RegistrarCliente");
+				datos.setearConsulta(" INSERT INTO Clientes (Documento, Nombre, Apellido, Email, Direccion, Ciudad, CP) VALUES (@Documento, @Nombre, @Apellido, @Email, @Direccion, @Ciudad, @CP); SELECT SCOPE_IDENTITY() AS NuevoId");
 				datos.setearParametro("@Documento", nuevo.Documento);
 				datos.setearParametro("@Nombre", nuevo.Nombre);
 				datos.setearParametro("@Apellido", nuevo.Apellido);
@@ -50,7 +50,7 @@ namespace negocio
 			AccesoDatos datos = new AccesoDatos();
 			try
 			{
-				datos.setearProcedimiento("SP_BuscarCliente");
+				datos.setearConsulta("SELECT Id, Documento, Nombre, Apellido, Email, Direccion, Ciudad, CP FROM Clientes WHERE Documento = @Documento;");
 
 				datos.setearParametro("@Documento", documento);
 				datos.ejecutarLectura();
@@ -86,7 +86,7 @@ namespace negocio
 
 			try
 			{
-				datos.setearProcedimiento("SP_ModificarCliente");
+				datos.setearConsulta("UPDATE Clientes SET Documento = @Documento, Nombre = @Nombre, Apellido = @Apellido, Email = @Email, Direccion = @Direccion, Ciudad = @Ciudad, CP = @CP WHERE Id = @Id;");
 				datos.setearParametro("@Id", cliente.IdCliente);
 				datos.setearParametro("@Documento", cliente.Documento);
 				datos.setearParametro("@Nombre", cliente.Nombre);

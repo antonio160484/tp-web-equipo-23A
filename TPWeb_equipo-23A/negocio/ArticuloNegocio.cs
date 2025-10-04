@@ -7,41 +7,42 @@ using dominio;
 
 namespace negocio
 {
-	public class ArticuloNegocio
-	{
-		public List<Articulo> listar()
-		{
-			List<Articulo> lista = new List<Articulo>();
-			AccesoDatos datos = new AccesoDatos();
+    public class ArticuloNegocio
+    {
+        public List<Articulo> listar()
+        {
+            List<Articulo> lista = new List<Articulo>();
+            AccesoDatos datos = new AccesoDatos();
 
-			try
-			{
-				datos.setearProcedimiento("SP_ListarArticulos");
-				datos.ejecutarLectura();
+            try
+            {
+                datos.setearConsulta("SELECT A.Id,A.Codigo,A.Nombre,A.Descripcion,A.Precio,M.Descripcion AS Marca,C.Descripcion AS Categoria FROM ARTICULOS A LEFT JOIN MARCAS M ON M.Id = A.IdMarca LEFT JOIN CATEGORIAS C ON C.Id = A.IdCategoria");
 
-				while (datos.Lector.Read())
-				{
-					Articulo aux = new Articulo();
+                datos.ejecutarLectura();
 
-					aux.Id = (int)datos.Lector["Id"];
-					aux.Nombre = (string)datos.Lector["Nombre"];
-					aux.Descripcion = (string)datos.Lector["Descripcion"];
-					
-					ImagenNegocio negocioImagen = new ImagenNegocio();
-					aux.listaImagenes = negocioImagen.lista(aux.Id);
-					lista.Add(aux);
-				}
+                while (datos.Lector.Read())
+                {
+                    Articulo aux = new Articulo();
 
-				return lista;
-			}
-			catch (Exception ex)
-			{
-				throw new Exception("Error al listar artículos desde la capa de negocio.", ex);
-			}
-			finally
-			{
-				datos.cerrarConexion();
-			}
-		}
-	}
+                    aux.Id = (int)datos.Lector["Id"];
+                    aux.Nombre = (string)datos.Lector["Nombre"];
+                    aux.Descripcion = (string)datos.Lector["Descripcion"];
+
+                    ImagenNegocio negocioImagen = new ImagenNegocio();
+                    aux.listaImagenes = negocioImagen.lista(aux.Id);
+                    lista.Add(aux);
+                }
+
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al listar artículos desde la capa de negocio.", ex);
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+    }
 }

@@ -16,7 +16,7 @@ namespace negocio
 
 			try
 			{
-				datos.setearProcedimiento("SP_ListarImagenesPorArticulo");
+				datos.setearConsulta("SELECT  I.Id, I.IdArticulo, I.ImagenUrl FROM IMAGENES I WHERE I.IdArticulo = @idArticulo");
 				datos.setearParametro("@idArticulo", idArticulo);
 				datos.ejecutarLectura();
 

@@ -146,3 +146,5 @@ insert into vouchers values
 select * from Clientes
 
 insert into Clientes values ('1234567', 'Pepe', 'Argento', 'pepe@argento.com', 'lalala 456', 'CABA', '1234')
+
+select * from Vouchers
