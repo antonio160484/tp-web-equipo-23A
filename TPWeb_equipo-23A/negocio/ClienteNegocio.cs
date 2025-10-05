@@ -13,11 +13,11 @@ namespace negocio
 		public int Registrar(Cliente nuevo)
 		{
 			AccesoDatos datos = new AccesoDatos();
-			int idGenerado = -1;
 
 			try
 			{
-				datos.setearConsulta(" INSERT INTO Clientes (Documento, Nombre, Apellido, Email, Direccion, Ciudad, CP) VALUES (@Documento, @Nombre, @Apellido, @Email, @Direccion, @Ciudad, @CP); SELECT SCOPE_IDENTITY() AS NuevoId");
+				datos.setearConsulta(" INSERT INTO Clientes (Documento, Nombre, Apellido, Email, Direccion, Ciudad, CP) VALUES (@Documento, @Nombre, @Apellido, @Email, @Direccion, @Ciudad, @CP); SELECT SCOPE_IDENTITY()");
+
 				datos.setearParametro("@Documento", nuevo.Documento);
 				datos.setearParametro("@Nombre", nuevo.Nombre);
 				datos.setearParametro("@Apellido", nuevo.Apellido);
@@ -26,14 +26,14 @@ namespace negocio
 				datos.setearParametro("@Ciudad", nuevo.Ciudad);
 				datos.setearParametro("@CP", nuevo.CodigoPostal);
 
-				datos.ejecutarLectura();
-
-				if (datos.Lector.Read())
+				object resultado = datos.ejecutarScalar();
+				if (resultado != null && resultado != DBNull.Value)
 				{
-					idGenerado = (int)datos.Lector["NuevoId"];
+					decimal idDecimal = Convert.ToDecimal(resultado);
+					return Convert.ToInt32(idDecimal);
 				}
 
-				return idGenerado;
+				return -1;
 			}
 			catch (Exception ex)
 			{

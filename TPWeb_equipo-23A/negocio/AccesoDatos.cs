@@ -64,21 +64,21 @@ namespace negocio
             comando.Parameters.AddWithValue(nombre, valor);
         }
 
-        public object ejecutarScalar()
-        {
-            comando.Connection = conexion;
-            try
-            {
-                conexion.Open();
-                return comando.ExecuteScalar();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
+		public object ejecutarScalar()
+		{
+			comando.Connection = conexion;
+			try
+			{
+				conexion.Open();
+				return comando.ExecuteScalar();
+			}
+			catch (Exception ex)
+			{
+				throw new Exception("Error en ExecuteScalar de AccesoDatos.", ex);
+			}
+		}
 
-        public void cerrarConexion()
+		public void cerrarConexion()
         {
             if (lector != null)
             {
@@ -89,7 +89,6 @@ namespace negocio
 
         public void setearProcedimiento(string spNombre)
         {
-            // Cambia el tipo de comando de CommandType.Text a CommandType.StoredProcedure
             comando.CommandType = System.Data.CommandType.StoredProcedure;
             comando.CommandText = spNombre;
         }
