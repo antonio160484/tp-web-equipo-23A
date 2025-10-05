@@ -14,28 +14,30 @@ namespace negocio
             List<Articulo> lista = new List<Articulo>();
             AccesoDatos datos = new AccesoDatos();
 
-            try
-            {
-                datos.setearConsulta("SELECT A.Id,A.Codigo,A.Nombre,A.Descripcion,A.Precio,M.Descripcion AS Marca,C.Descripcion AS Categoria FROM ARTICULOS A LEFT JOIN MARCAS M ON M.Id = A.IdMarca LEFT JOIN CATEGORIAS C ON C.Id = A.IdCategoria");
+			try
+			{
+				datos.setearConsulta("SELECT A.Id,A.Codigo,A.Nombre,A.Descripcion,A.Precio,M.Descripcion AS Marca,C.Descripcion AS Categoria FROM ARTICULOS A LEFT JOIN MARCAS M ON M.Id = A.IdMarca LEFT JOIN CATEGORIAS C ON C.Id = A.IdCategoria");
 
-                datos.ejecutarLectura();
+				datos.ejecutarLectura();
 
-                while (datos.Lector.Read())
-                {
-                    Articulo aux = new Articulo();
+				while (datos.Lector.Read())
+				{
+					Articulo aux = new Articulo();
 
-                    aux.Id = (int)datos.Lector["Id"];
-                    aux.Nombre = (string)datos.Lector["Nombre"];
-                    aux.Descripcion = (string)datos.Lector["Descripcion"];
+					aux.Id = (int)datos.Lector["Id"];
+					aux.Codigo = (string)datos.Lector["Codigo"];
 
-                    ImagenNegocio negocioImagen = new ImagenNegocio();
-                    aux.listaImagenes = negocioImagen.lista(aux.Id);
-                    lista.Add(aux);
-                }
+					aux.Nombre = (string)datos.Lector["Nombre"];
+					aux.Descripcion = (string)datos.Lector["Descripcion"];
 
-                return lista;
-            }
-            catch (Exception ex)
+					ImagenNegocio negocioImagen = new ImagenNegocio();
+					aux.listaImagenes = negocioImagen.lista(aux.Id);
+					lista.Add(aux);
+				}
+
+				return lista;
+			}
+			catch (Exception ex)
             {
                 throw new Exception("Error al listar artículos desde la capa de negocio.", ex);
             }

@@ -10,34 +10,42 @@ using System.Web.UI.WebControls;
 
 namespace TPWeb_equipo_23A
 {
-    public partial class IngresoDeDatos : System.Web.UI.Page
-    {
-        protected TextBox txtNombre;
-        protected TextBox txtApellido;
-        protected TextBox txtMail;
-        protected TextBox txtDireccion;
-        protected TextBox txtCiudad;
-        protected TextBox txtCp;
-        protected CheckBox chkTerminosYCond;
+	public partial class IngresoDeDatos : System.Web.UI.Page
+	{
+		protected TextBox txtNombre;
+		protected TextBox txtApellido;
+		protected TextBox txtMail;
+		protected TextBox txtDireccion;
+		protected TextBox txtCiudad;
+		protected TextBox txtCp;
+		protected CheckBox chkTerminosYCond;
 
-        protected void Page_Load(object sender, EventArgs e)
-        {
-            if (!IsPostBack)
-            {
-                string idArticuloString = Request.QueryString["idArticulo"];
-                if (!string.IsNullOrEmpty(idArticuloString) && int.TryParse(idArticuloString, out int idArticulo))
-                {
-                    Session["IdArticuloSeleccionado"] = idArticulo;
-                }
-                else
-                {
-                    lblError.Text = "No se pudo determinar el premio seleccionado.";
-                    lblError.ForeColor = System.Drawing.Color.Red;
-                }
-            }
-        }
 
-        protected void txtDni_TextChanged(object sender, EventArgs e)
+		protected void Page_Load(object sender, EventArgs e)
+		{
+			if (!IsPostBack)
+			{
+				string idArticuloString = Request.QueryString["idArticulo"];
+
+				if (string.IsNullOrEmpty(idArticuloString) ||
+					!int.TryParse(idArticuloString, out int idArticulo))
+				{
+					Session.Add("error", "Error: No se ha seleccionado un premio válido.");
+					Response.Redirect("Error.aspx", false);
+					return;
+				}
+				Session["IdArticuloSeleccionado"] = idArticulo;
+
+				if (Session["CodigoVoucherCanjeo"] == null)
+				{
+					Session.Add("error", "Error de sesión: El código de voucher se perdió.");
+					Response.Redirect("Error.aspx", false);
+					return;
+				}
+			}
+		}
+
+		protected void txtDni_TextChanged(object sender, EventArgs e)
 		{
 			lblError.Text = string.Empty;
 
@@ -62,8 +70,6 @@ namespace TPWeb_equipo_23A
 					txtDireccion.Text = clienteExistente.Direccion;
 					txtCiudad.Text = clienteExistente.Ciudad;
 					txtCp.Text = clienteExistente.CodigoPostal.ToString();
-
-					// Mantener el DNI deshabilitado para evitar cambios
 					txtDni.Enabled = false;
 					Session["IdClienteExistente"] = clienteExistente.IdCliente;
 
@@ -73,8 +79,6 @@ namespace TPWeb_equipo_23A
 				else
 				{
 					txtNombre.Text = txtApellido.Text = txtMail.Text = txtDireccion.Text = txtCiudad.Text = txtCp.Text = string.Empty;
-
-					// Mantener el DNI habilitado solo si no existe el cliente
 					txtDni.Enabled = true;
 					Session["IdClienteExistente"] = null;
 
@@ -93,6 +97,17 @@ namespace TPWeb_equipo_23A
 		{
 			lblError.Text = string.Empty;
 			lblTerminosError.Visible = false;
+			string codigoVoucher = (string)Session["CodigoVoucherCanjeo"];
+			int idArticulo = 0;
+
+			if (Session["IdArticuloSeleccionado"] == null || codigoVoucher == null)
+			{
+				lblError.Text = "Error crítico: El código de voucher o el premio se perdieron. Vuelve a empezar el proceso.";
+				lblError.ForeColor = Color.Red;
+				return;
+			}
+			idArticulo = (int)Session["IdArticuloSeleccionado"];
+
 
 			Page.Validate("RegistroGroup");
 			if (!Page.IsValid)
@@ -130,31 +145,24 @@ namespace TPWeb_equipo_23A
 				clienteDatos.Direccion = txtDireccion.Text.Trim();
 				clienteDatos.Ciudad = txtCiudad.Text.Trim();
 				clienteDatos.CodigoPostal = cpValue;
-				string codigoVoucher = (string)Session["CodigoVoucherCanjeo"];
-                int idArticulo = (int)Session["IdArticuloSeleccionado"];
 
-                // Comprobación directa en la base de datos por DNI
-                Cliente clienteExistente = clienteNegocio.Buscar(clienteDatos.Documento);
+				Cliente clienteExistente = clienteNegocio.Buscar(clienteDatos.Documento);
 				if (clienteExistente != null)
 				{
-					// Modificar el cliente existente
 					clienteDatos.IdCliente = clienteExistente.IdCliente;
 					idClienteCanje = clienteExistente.IdCliente;
 					clienteNegocio.Modificar(clienteDatos);
 				}
 				else
 				{
-					// Registrar nuevo cliente
 					idClienteCanje = clienteNegocio.Registrar(clienteDatos);
 
 					if (idClienteCanje <= 0)
 						throw new Exception("El registro de cliente falló. Contacte al administrador.");
 				}
-
 				VoucherNegocio vn = new VoucherNegocio();
 				vn.CanjearVoucher(codigoVoucher, idClienteCanje, idArticulo);
 
-				// Limpiar la sesión solo después de la operación
 				Session["CodigoVoucherCanjeo"] = null;
 				Session["IdArticuloSeleccionado"] = null;
 				Session["IdClienteExistente"] = null;
