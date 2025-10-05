@@ -137,11 +137,11 @@ insert into imagenes values
 insert into clientes values ('32333222', 'Doug', 'Narinas', 'doug@narinas.com','avenida 123', 'chuletas city', 1234)
 
 insert into vouchers values 
-('Codigo01', 1, getdate()-10, 2),
-('Codigo02', null, null, null),
-('Codigo03', null, null, null),
-('Codigo04', null, null, null),
-('Codigo05', null, null, null)
+('Codigo06', null, null, null),
+('Codigo07', null, null, null),
+('Codigo08', null, null, null),
+('Codigo09', null, null, null),
+('Codigo10', null, null, null)
 
 select * from Clientes
 
