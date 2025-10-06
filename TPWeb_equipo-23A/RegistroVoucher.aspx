@@ -12,7 +12,7 @@
                             <div class="mb-3">
                                 <label for="txtCodigoVoucher" class="form-label">Codigo del voucher:</label>
                                 <div class="d-flex justify-content-center">
-                                    <asp:TextBox runat="server" ID="txtCodigoVoucher" CssClass="form-control w-50 mx-auto" />
+                                    <asp:TextBox runat="server" REQUIRED ID="txtCodigoVoucher"  CssClass="form-control w-50 mx-auto" />
                                 </div>
                             </div>
                             <div class="mb-3">

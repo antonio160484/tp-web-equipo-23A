@@ -25,6 +25,12 @@ namespace TPWeb_equipo_23A
             string codigo = txtCodigoVoucher.Text;
             VoucherNegocio negocio = new VoucherNegocio();
 
+            if (string.IsNullOrEmpty(txtCodigoVoucher.Text))
+            {
+                Session.Add("Error", "el campo codigo de voucher es obligatorio");
+                Response.Redirect("Error.aspx");
+            }
+
             if (negocio.EsValido(codigo))
             {
                 Session["voucher"] = negocio.BuscarPorCodigo(codigo);
