@@ -125,7 +125,36 @@ namespace TPWeb_equipo_23A
 				return;
 			}
 
-			ClienteNegocio clienteNegocio = new ClienteNegocio();
+            if (txtDni.Text.Trim().Length < 7 || txtDni.Text.Trim().Length > 8)
+            {
+                lblError.Text = "El DNI debe tener entre 7 y 8 dígitos.";
+                lblError.ForeColor = Color.Red;
+                return;
+            }
+
+            if (txtCp.Text.Trim().Length < 4 || txtCp.Text.Trim().Length > 8)
+            {
+                lblError.Text = "El código postal debe tener entre 4 y 8 dígitos.";
+                lblError.ForeColor = Color.Red;
+                return;
+            }
+
+            if (txtDireccion.Text.Trim().Length < 5)
+            {
+                lblError.Text = "Ingresá una dirección válida.";
+                lblError.ForeColor = Color.Red;
+                return;
+            }
+
+            if (txtCiudad.Text.Trim().Length < 4)
+            {
+                lblError.Text = "Ingresá una ciudad válida.";
+                lblError.ForeColor = Color.Red;
+                return;
+            }
+
+
+            ClienteNegocio clienteNegocio = new ClienteNegocio();
 			Cliente clienteDatos = new Cliente();
 			int idClienteCanje;
 
@@ -160,12 +189,9 @@ namespace TPWeb_equipo_23A
 					if (idClienteCanje <= 0)
 						throw new Exception("El registro de cliente falló. Contacte al administrador.");
 				}
+				
 				VoucherNegocio vn = new VoucherNegocio();
 				vn.CanjearVoucher(codigoVoucher, idClienteCanje, idArticulo);
-
-				Session["CodigoVoucherCanjeo"] = null;
-				Session["IdArticuloSeleccionado"] = null;
-				Session["IdClienteExistente"] = null;
 
 				Response.Redirect("Exito.aspx", false);
 			}
